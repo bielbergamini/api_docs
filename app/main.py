@@ -1,11 +1,14 @@
 from fastapi import FastAPI
+from app.core.config import settings
 
 app = FastAPI(
-    title="Documents API",
-    description="API REST para gestão de documentos usando FastAPI e AWS",
+    title=settings.APP_NAME,
     version="1.0.0"
 )
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "environment": settings.ENV
+    }

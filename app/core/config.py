@@ -1,20 +1,19 @@
-from pydantic import BaseSettings
+from pydantic_settings import (
+    BaseSettings,
+    SettingsConfigDict
+)
+
+class Setting(BaseSettings):
+    model_config = SettingsConfigDict(env_file='.env')
+
+    table_name: str
+    aws_region: str
+    s3_bucket_name: str 
+    cognito_user_pool_id: str
+    cognito_client_id: str
+    environment: str = "dev"
 
 
-class Settings(BaseSettings):
-    APP_NAME: str = "Documents API"
-    ENV: str = "development"
-
-    AWS_REGION: str = "us-east-1"
-    AWS_S3_BUCKET: str = "documents-api-bucket"
-    DYNAMODB_TABLE: str = "documents"
-
-    JWT_SECRET_KEY: str = "change-me"
-    JWT_ALGORITHM: str = "HS256"
-    JWT_EXPIRE_MINUTES: int = 60
-
-    class Config:
-        env_file = ".env"
+app_config = Setting()
 
 
-settings = Settings()
